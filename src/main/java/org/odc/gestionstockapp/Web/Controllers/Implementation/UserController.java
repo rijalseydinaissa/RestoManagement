@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/auth")
 public class UserController implements CrudController<UserEntity, UserDto, UserDtoUpdate> {
-
     @Autowired
     private UserService userService;
 

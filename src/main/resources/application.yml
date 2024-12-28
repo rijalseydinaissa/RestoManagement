@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://ep-round-salad-a5pr21up.us-east-2.aws.neon.tech/GestionStock?user=GestionStock_owner&password=DAz8PxIONCe3&sslmode=require
-    password: DAz8PxIONCe3
-    username: GestionStock_owner
+    url: jdbc:postgresql://localhost:5432/gestiona_app
+    password: postgres
+    username: postgres
     driver-class-name: org.postgresql.Driver
   jpa :
     hibernate:

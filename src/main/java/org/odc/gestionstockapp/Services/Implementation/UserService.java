@@ -8,6 +8,7 @@ import org.odc.gestionstockapp.Web.Dtos.UserDtoUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 @Service
 public class UserService implements CrudService<UserEntity, UserDto, UserDtoUpdate> {

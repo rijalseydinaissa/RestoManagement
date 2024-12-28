@@ -36,7 +36,7 @@ public class SecurityConfigurationImpl {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .requestMatchers("/auth/**","/swagger-ui/**","/v3/api-docs/**","/swagger-resources/**","/error/**","/webjars/**","/api-docs/**")
+                .requestMatchers("/auth/**","/swagger-ui/**","/v3/api-docs/**","/swagger-resources/**","/error/**","/webjars/**","/api-docs/**","/produits/{id}","/produits","/search","/commandes/{id}","/commandes","/commandes/search","/updates")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
