@@ -24,9 +24,12 @@ public class CommandeEntity {
     private LocalDate date;
 
     private double montantTotal;
+    @Column(name = "nombre_produits")
+    private Integer nombreProduits = 0;
+
 
     @Enumerated(EnumType.STRING)
-    private StatutCommande status;
+    private StatutCommande status=StatutCommande.NONREGLE;
 
     @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

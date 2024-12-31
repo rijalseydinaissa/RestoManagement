@@ -13,7 +13,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {
+        RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+        RequestMethod.DELETE, RequestMethod.OPTIONS
+})
 public class CommandeController implements CrudController<CommandeEntity, CommandeDto, CommandeProduitDto> {
     private final CommandeService commandeService;
     private final CommandeMapper commandeMapper;

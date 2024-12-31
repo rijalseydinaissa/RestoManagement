@@ -9,3 +9,7 @@ spring:
       ddl-auto: update
 server:
   port: 8081
+cloudinary:
+  cloud_name: dj31m8jdj
+  api_key: 644751775479442
+  api_secret: Y7xiIDvr3xR_NR54vBhAhXJR3lI

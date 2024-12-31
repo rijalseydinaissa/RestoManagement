@@ -13,5 +13,6 @@ public class CommandeDto {
     private LocalDate date;
     private StatutCommande status;
     private String client;
+    private int nombreProduits;
     List<CommandeProduitDto> produits;
 }

@@ -22,7 +22,6 @@ public class SecurityConfigurationImpl {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthenticationFilter;
 
-
     public SecurityConfigurationImpl(
             JwtAuthFilter jwtAuthenticationFilter,
             AuthenticationProvider authenticationProvider
@@ -36,7 +35,23 @@ public class SecurityConfigurationImpl {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .requestMatchers("/auth/**","/swagger-ui/**","/v3/api-docs/**","/swagger-resources/**","/error/**","/webjars/**","/api-docs/**","/produits/{id}","/produits","/search","/commandes/{id}","/commandes","/commandes/search","/updates")
+                .requestMatchers(
+                        "/auth/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/error/**",
+                        "/webjars/**",
+                        "/api-docs/**",
+                        "/produits/{id}",
+                        "/produits/{id}/image",  // Endpoint pour l'upload d'image
+                        "/produits",
+                        "/search",
+                        "/commandes/{id}",
+                        "/commandes",
+                        "/commandes/search",
+                        "/updates"
+                )
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -44,17 +59,42 @@ public class SecurityConfigurationImpl {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        http.cors(); // Activer la configuration CORS
+
         return http.build();
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(){
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
+        // Spécifier explicitement les origines autorisées
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:4200",      // Application Angular en développement
+                "http://localhost:8080",
+                "http://localhost:8081"
+        ));
+
+        // Méthodes HTTP autorisées
+        configuration.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "OPTIONS"
+        ));
+
+        // Headers autorisés
+        configuration.setAllowedHeaders(List.of(
+                "Authorization",
+                "Content-Type",
+                "Accept",
+                "X-Requested-With",
+                "Cache-Control"
+        ));
+
         configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L); // Cache la configuration CORS pendant 1 heure
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

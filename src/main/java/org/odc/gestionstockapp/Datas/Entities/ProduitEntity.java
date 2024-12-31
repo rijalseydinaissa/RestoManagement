@@ -28,6 +28,8 @@ public class ProduitEntity {
     private Integer quantite;
 
     private Double prix;
+    @Column(name = "prix_achat")
+    private  Double prixAchat;
 
     @Enumerated(EnumType.STRING)
     private Categorie categorie;

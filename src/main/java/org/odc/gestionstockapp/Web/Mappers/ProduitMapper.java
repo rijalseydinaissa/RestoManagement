@@ -9,6 +9,7 @@ import org.odc.gestionstockapp.Web.Dtos.ProduitDtoUpdate;
 
 @Mapper(componentModel = "spring")
 public interface ProduitMapper {
+    @Mapping(source = "prixAchat", target = "prixAchat")
     // Map ProduitDto vers ProduitEntity
     ProduitEntity toEntity(ProduitDto produitDto);
 

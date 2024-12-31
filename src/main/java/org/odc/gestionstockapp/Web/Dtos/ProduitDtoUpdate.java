@@ -9,5 +9,6 @@ public class ProduitDtoUpdate {
     private String image;
     private Integer quantite;
     private Double prix;
+    private Double prixAchat;
     private String statut;
 }
