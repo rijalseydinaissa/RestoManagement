@@ -81,7 +81,7 @@ public class SecurityConfigurationImpl {
                 "http://localhost:4200",      // Application Angular en développement
                 "http://localhost:8080",
                 "http://localhost:8081",
-                "https://angular-front-7tchdce03-projetgroupe5.vercel.app"
+                "https://angular-front-app-mu.vercel.app"
         ));
 
         // Méthodes HTTP autorisées

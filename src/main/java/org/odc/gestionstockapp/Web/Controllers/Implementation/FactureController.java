@@ -38,7 +38,7 @@ public class FactureController {
     }
 
 
-    @CrossOrigin(origins = "https://angular-front-7tchdce03-projetgroupe5.vercel.app", allowedHeaders = "*", exposedHeaders = "Content-Disposition")
+    @CrossOrigin(origins = "https://angular-front-app-mu.vercel.app/", allowedHeaders = "*", exposedHeaders = "Content-Disposition")
     @GetMapping("/telecharger-facture/{urlUnique}")
     @Transactional // Ajoutez cette annotation
     public ResponseEntity<byte[]> telechargerFacture(@PathVariable String urlUnique) {

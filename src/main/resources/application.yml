@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/gestiona_app
-    password: postgres
-    username: postgres
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/gestiona_app}
+    password: ${DATABASE_PASSWORD:postgres}
+    username: ${DATABASE_USERNAME:postgres}
     driver-class-name: org.postgresql.Driver
   jpa :
     hibernate:
@@ -10,8 +10,8 @@ spring:
 server:
   port: 8081
 cloudinary:
-  cloud_name: dj31m8jdj
-  api_key: 644751775479442
-  api_secret: Y7xiIDvr3xR_NR54vBhAhXJR3lI
+  cloud_name: ${CLOUDINARY_CLOUD_NAME:dj31m8jdj}
+  api_key: ${CLOUDINARY_API_KEY:644751775479442}
+  api_secret: ${CLOUDINARY_API_SECRET:Y7xiIDvr3xR_NR54vBhAhXJR3lI}
 app:
   base-url: http://localhost:8081
