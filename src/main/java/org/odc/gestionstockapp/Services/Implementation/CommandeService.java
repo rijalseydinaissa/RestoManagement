@@ -3,6 +3,7 @@ package org.odc.gestionstockapp.Services.Implementation;
 import org.odc.gestionstockapp.Datas.Entities.CommandeEntity;
 import org.odc.gestionstockapp.Datas.Entities.CommandeProduit;
 import org.odc.gestionstockapp.Datas.Entities.ProduitEntity;
+import org.odc.gestionstockapp.Datas.Enums.StatutCommande;
 import org.odc.gestionstockapp.Datas.Repositories.CommandeProduitRepository;
 import org.odc.gestionstockapp.Datas.Repositories.CommandeRepository;
 import org.odc.gestionstockapp.Datas.Repositories.ProduitRepository;
@@ -31,6 +32,7 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
         this.commandeMapper = commandeMapper;
         this.commandeProduitRepository = commandeProduitRepository;
         this.produitRepository = produitRepository;
+        this.produceService = produceService;
     }
 
     @Override
@@ -38,20 +40,16 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
     public CommandeEntity create(CommandeDto t) {
         CommandeEntity commandeEntity = commandeMapper.toEntity(t);
         commandeEntity.setDate(LocalDate.now());
-
         double montantTotal = 0;
-
         // Vérifier et traiter chaque produit
         List<CommandeProduit> commandeProduits = t.getProduits().stream().map(produitDto -> {
             // Récupérer le produit
             ProduitEntity produit = produitRepository.findById(produitDto.getProduitId())
                     .orElseThrow(() -> new IllegalArgumentException("Produit introuvable"));
-
             // Vérifier la quantité
             if (produitDto.getQuantite() <= 0) {
                 throw new IllegalArgumentException("La quantité doit être supérieure à 0 pour le produit " + produit.getNom());
             }
-
             if (produitDto.getQuantite() > produit.getQuantite()) {
                 throw new IllegalArgumentException(
                         String.format("Stock insuffisant pour le produit %s. Stock disponible : %d, Quantité demandée : %d",
@@ -62,13 +60,11 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
             produit.setQuantite(produit.getQuantite() - produitDto.getQuantite());
             produceService.updateProduitStatus(produit);
             produitRepository.save(produit);
-
             // Créer la ligne de commande
             CommandeProduit commandeProduit = new CommandeProduit();
             commandeProduit.setCommande(commandeEntity);
             commandeProduit.setProduit(produit);
             commandeProduit.setQuantite(produitDto.getQuantite());
-
             return commandeProduit;
         }).collect(Collectors.toList());
 
@@ -76,11 +72,10 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
         montantTotal = commandeProduits.stream()
                 .mapToDouble(cp -> cp.getProduit().getPrix() * cp.getQuantite())
                 .sum();
-
         // Associer les produits à la commande
         commandeEntity.setCommandeProduits(commandeProduits);
         commandeEntity.setMontantTotal(montantTotal);
-
+        commandeEntity.setNombreProduits(commandeProduits.size()); // Nouvelle ligne ajoutée
         // Sauvegarder la commande
         return commandeRepository.save(commandeEntity);
     }
@@ -101,6 +96,13 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
     @Override
     public CommandeEntity findById(int id) {
         return commandeRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public CommandeEntity updateStatus( int id ,String status){
+        CommandeEntity commandeEntity = commandeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Commande introuvable"));
+        commandeEntity.setStatus(StatutCommande.valueOf(status));
+        return commandeRepository.save(commandeEntity);
     }
 
     public List<CommandeDto> searchCommande(String client, LocalDate date) {

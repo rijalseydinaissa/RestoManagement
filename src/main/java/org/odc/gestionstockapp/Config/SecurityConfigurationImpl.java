@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -50,7 +51,14 @@ public class SecurityConfigurationImpl {
                         "/commandes/{id}",
                         "/commandes",
                         "/commandes/search",
-                        "/updates"
+                        "/updates",
+                        "/commandes/{id}/status",
+                        "/factures/generer/{commandeId}",
+                        "/api/factures/generer/{commandeId}",
+                        ("/telecharger-facture/{urlUnique}"),
+                        "/factures/telecharger-facture/{urlUnique}",
+                        "/generer/{commandeId}",
+                        "/telecharger/{urlUnique}"
                 )
                 .permitAll()
                 .anyRequest()
@@ -72,7 +80,8 @@ public class SecurityConfigurationImpl {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:4200",      // Application Angular en développement
                 "http://localhost:8080",
-                "http://localhost:8081"
+                "http://localhost:8081",
+                "https://angular-front-7tchdce03-projetgroupe5.vercel.app"
         ));
 
         // Méthodes HTTP autorisées
@@ -81,7 +90,8 @@ public class SecurityConfigurationImpl {
                 "POST",
                 "PUT",
                 "DELETE",
-                "OPTIONS"
+                "OPTIONS",
+                "PATCH"
         ));
 
         // Headers autorisés
