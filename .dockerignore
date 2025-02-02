@@ -1,0 +1,6 @@
+target/
+.idea/
+.git/
+Dockerfile
+docker-compose.yml
+node_modules/
