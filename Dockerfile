@@ -22,4 +22,4 @@ RUN ./mvnw clean package -DskipTests
 EXPOSE 8081
 
 # Étape 8 : Commande pour exécuter l'application
-CMD ["java", "-jar", "target/gestionstockapp-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/GestionStockApp-0.0.1-SNAPSHOT.jar"]
