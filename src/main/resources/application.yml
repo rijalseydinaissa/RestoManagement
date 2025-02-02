@@ -17,4 +17,4 @@ cloudinary:
   api_key: ${CLOUDINARY_API_KEY:644751775479442}
   api_secret: ${CLOUDINARY_API_SECRET:Y7xiIDvr3xR_NR54vBhAhXJR3lI}
 app:
-  base-url: ${APP_BASE_URL:https://https://gestionstock-ampo.onrender.com}
+  base-url: ${APP_BASE_URL:https://gestionstock-ampo.onrender.com}
