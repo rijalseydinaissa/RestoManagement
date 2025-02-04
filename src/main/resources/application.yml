@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://dpg-cufcvrtq21c73f54110-a.virginia-postgres.render.com:5432/gestionstockapp}
+    url: ${DATABASE_URL:jdbc:postgresql://rijal:B6ZqdEpFDUJBSVOlNJPAqclqMsaJJgZc@dpg-cufcvrrtq21c73f54i10-a.virginia-postgres.render.com/gestionstockapp}
     password: ${DATABASE_PASSWORD}
     username: ${DATABASE_USERNAME}
     driver-class-name: org.postgresql.Driver
