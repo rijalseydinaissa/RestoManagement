@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://dpg-cufcvrtq21c73f54110-a.virginia-postgres.render.com:5432/gestionstockapp}
-    password: ${DATABASE_PASSWORD}
-    username: ${DATABASE_USERNAME}
+    url: jdbc:postgresql://localhost:5432/gestiona_app
+    password: postgres
+    username: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -11,10 +11,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: ${PORT:8081}
+  port: 8081
 cloudinary:
-  cloud_name: ${CLOUDINARY_CLOUD_NAME:dj31m8jdj}
-  api_key: ${CLOUDINARY_API_KEY:644751775479442}
-  api_secret: ${CLOUDINARY_API_SECRET:Y7xiIDvr3xR_NR54vBhAhXJR3lI}
+  cloud_name: dj31m8jdj
+  api_key: 644751775479442
+  api_secret: Y7xiIDvr3xR_NR54vBhAhXJR3lI
+
 app:
-  base-url: ${APP_BASE_URL:https://gestionstock-ampo.onrender.com}
+  base-url: "http://localhost:8081"
