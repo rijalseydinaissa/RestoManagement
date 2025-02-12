@@ -46,8 +46,24 @@ public class ProduitService implements CrudService<ProduitEntity,ProduitDto,Prod
 
 
     @Override
-    public ProduitEntity update(ProduitDtoUpdate t) {
-        return null;
+    public ProduitEntity update(ProduitDtoUpdate produitDtoUpdate) {
+        // Récupérer le produit existant
+        ProduitEntity existingProduit = produitRepository.findById(produitDtoUpdate.getId())
+                .orElseThrow(() -> new RuntimeException("Produit non trouvé"));
+        // Mettre à jour les champs
+        existingProduit.setNom(produitDtoUpdate.getNom());
+        existingProduit.setPrix(produitDtoUpdate.getPrix());
+        existingProduit.setPrixAchat(produitDtoUpdate.getPrixAchat());
+        existingProduit.setQuantite(produitDtoUpdate.getQuantite());
+        existingProduit.setCategorie(produitDtoUpdate.getCategorie());
+        // Si l'image est fournie dans le DTO, la mettre à jour
+        if (produitDtoUpdate.getImage() != null) {
+            existingProduit.setImage(produitDtoUpdate.getImage());
+        }
+        // Mettre à jour le statut en fonction de la quantité
+        updateProduitStatus(existingProduit);
+        // Sauvegarder et retourner le produit mis à jour
+        return produitRepository.save(existingProduit);
     }
 
     @Override
