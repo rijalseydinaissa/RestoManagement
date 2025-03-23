@@ -1,6 +1,8 @@
 package org.odc.gestionstockapp.Datas.Enums;
 
 public enum Categorie {
-    ELECTRONIQUE,
-    INFORMATIQUE
+    ENTREE,
+    PLAT_PRINCIPAL,
+    DESSERT,
+    BOISSON
 }

@@ -1,5 +1,6 @@
 package org.odc.gestionstockapp.Web.Controllers.Implementation;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import org.odc.gestionstockapp.Datas.Entities.FactureEntity;
 import org.odc.gestionstockapp.Services.Implementation.FactureService;
@@ -14,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/factures")
+@Tag(name = "Facture", description = "API pour la gestion des factures")
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {
         RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
@@ -25,7 +27,7 @@ public class FactureController {
 
     @Autowired
     private FactureRepository factureRepository;
-
+    // Génération de facture - uniquement serveur (pour ses commandes) et admin
     @GetMapping("/generer/{commandeId}")
     public ResponseEntity<String> genererFacture(@PathVariable Long commandeId) {
         try {

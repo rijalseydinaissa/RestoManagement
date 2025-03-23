@@ -12,7 +12,10 @@ import java.util.List;
 public class CommandeDto {
     private LocalDate date;
     private StatutCommande status;
-    private String client;
+    private String numeroTable;
     private int nombreProduits;
+    private int tableId;
+    private Long serveurId;  // ID du serveur qui crée la commande
+    private boolean payee;
     List<CommandeProduitDto> produits;
 }

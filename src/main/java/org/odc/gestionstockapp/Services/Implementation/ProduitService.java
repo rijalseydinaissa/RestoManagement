@@ -30,17 +30,17 @@ public class ProduitService implements CrudService<ProduitEntity,ProduitDto,Prod
     @Override
     public ProduitEntity create(ProduitDto t) {
         ProduitEntity produitEntity = produitMapper.toEntity(t);
-        // Par défaut, le statut est SUFFISANT à la création
-        produitEntity.setStatut(StatutProduit.SUFFISANT);
+        // Par défaut, le statut est Disponibe à la création
+        produitEntity.setStatut(StatutProduit.DISPONIBLE);
         return produitRepository.save(produitEntity);
     }
 
     // Méthode utilitaire pour mettre à jour le statut
     void updateProduitStatus(ProduitEntity produit) {
         if (produit.getQuantite() == 0) {
-            produit.setStatut(StatutProduit.INSUFFISANT);
+            produit.setStatut(StatutProduit.INDISPONIBLE);
         } else {
-            produit.setStatut(StatutProduit.SUFFISANT);
+            produit.setStatut(StatutProduit.DISPONIBLE);
         }
     }
 
@@ -53,9 +53,9 @@ public class ProduitService implements CrudService<ProduitEntity,ProduitDto,Prod
         // Mettre à jour les champs
         existingProduit.setNom(produitDtoUpdate.getNom());
         existingProduit.setPrix(produitDtoUpdate.getPrix());
-        existingProduit.setPrixAchat(produitDtoUpdate.getPrixAchat());
         existingProduit.setQuantite(produitDtoUpdate.getQuantite());
         existingProduit.setCategorie(produitDtoUpdate.getCategorie());
+        existingProduit.setDescription(produitDtoUpdate.getDescription());
         // Si l'image est fournie dans le DTO, la mettre à jour
         if (produitDtoUpdate.getImage() != null) {
             existingProduit.setImage(produitDtoUpdate.getImage());

@@ -32,8 +32,17 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    //public String generateToken(UserDetails userDetails) {
+       // return generateToken(new HashMap<>(), userDetails);
+    //}
+    // Dans votre JwtService ou AuthService côté backend
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> claims = new HashMap<>();
+        // Ajouter le rôle dans les claims
+        if (userDetails.getAuthorities() != null && !userDetails.getAuthorities().isEmpty()) {
+            claims.put("role", userDetails.getAuthorities().iterator().next().getAuthority());
+        }
+        return generateToken(claims, userDetails);
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {

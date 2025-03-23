@@ -1,5 +1,6 @@
 package org.odc.gestionstockapp.Web.Controllers.Implementation;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.odc.gestionstockapp.Datas.Entities.ProduitEntity;
 import org.odc.gestionstockapp.Datas.Enums.Categorie;
 import org.odc.gestionstockapp.Datas.Repositories.ProduitRepository;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/produits")
+@Tag(name = "Produits", description = "API pour la gestion des plats")
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {
         RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
         RequestMethod.DELETE, RequestMethod.OPTIONS

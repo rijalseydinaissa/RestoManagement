@@ -1,5 +1,9 @@
 package org.odc.gestionstockapp.Services.Interfaces;
 
+import org.odc.gestionstockapp.Datas.Entities.CommandeEntity;
+import org.odc.gestionstockapp.Web.Dtos.CommandeProduitDto;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 public interface CrudService<T,Dto,DtoUpdate> {

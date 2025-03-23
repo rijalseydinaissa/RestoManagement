@@ -6,6 +6,7 @@ import org.odc.gestionstockapp.Services.Interfaces.CrudService;
 import org.odc.gestionstockapp.Web.Dtos.UserDto;
 import org.odc.gestionstockapp.Web.Dtos.UserDtoUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -15,6 +16,8 @@ public class UserService implements CrudService<UserEntity, UserDto, UserDtoUpda
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public UserEntity create(UserDto t) {
@@ -23,7 +26,7 @@ public class UserService implements CrudService<UserEntity, UserDto, UserDtoUpda
                         .nom(t.getNom())
                         .prenom(t.getPrenom())
                         .email(t.getEmail())
-                        .password(t.getPassword())
+                        .password(passwordEncoder.encode(t.getPassword()))
                         .role(t.getRole())
                 .build());
     }

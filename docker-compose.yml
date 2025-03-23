@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: gestion_stock_db
+    environment:
+      POSTGRES_DB: gestiona_app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: gestion_stock_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gestiona_app
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      CLOUDINARY_CLOUD_NAME: dj31m8jdj
+      CLOUDINARY_API_KEY: 644751775479442
+      CLOUDINARY_API_SECRET: Y7xiIDvr3xR_NR54vBhAhXJR3lI
+      APP_BASE_URL: https://angular-front-app-mu.vercel.app
+      ALLOWED_ORIGINS: https://angular-front-app-mu.vercel.app
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    name: gestion_stock_data

@@ -36,6 +36,7 @@ public class SecurityConfigurationImpl {
         http.csrf()
                 .disable()
                 .authorizeRequests()
+
                 .requestMatchers(
                         "/auth/**",
                         "/swagger-ui/**",
@@ -43,22 +44,7 @@ public class SecurityConfigurationImpl {
                         "/swagger-resources/**",
                         "/error/**",
                         "/webjars/**",
-                        "/api-docs/**",
-                        "/produits/{id}",
-                        "/produits/{id}/image",  // Endpoint pour l'upload d'image
-                        "/produits",
-                        "/search",
-                        "/commandes/{id}",
-                        "/commandes",
-                        "/commandes/search",
-                        "/updates",
-                        "/commandes/{id}/status",
-                        "/factures/generer/{commandeId}",
-                        "/api/factures/generer/{commandeId}",
-                        ("/telecharger-facture/{urlUnique}"),
-                        "/factures/telecharger-facture/{urlUnique}",
-                        "/generer/{commandeId}",
-                        "/telecharger/{urlUnique}"
+                        "/api-docs/**"
                 )
                 .permitAll()
                 .anyRequest()
@@ -75,7 +61,6 @@ public class SecurityConfigurationImpl {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
         // Spécifier explicitement les origines autorisées
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:4200",      // Application Angular en développement
@@ -93,7 +78,6 @@ public class SecurityConfigurationImpl {
                 "OPTIONS",
                 "PATCH"
         ));
-
         // Headers autorisés
         configuration.setAllowedHeaders(List.of(
                 "Authorization",
@@ -102,10 +86,8 @@ public class SecurityConfigurationImpl {
                 "X-Requested-With",
                 "Cache-Control"
         ));
-
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L); // Cache la configuration CORS pendant 1 heure
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 

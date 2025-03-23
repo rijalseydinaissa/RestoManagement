@@ -6,32 +6,68 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.odc.gestionstockapp.Datas.Enums.StatutCommande;
+import org.odc.gestionstockapp.Datas.Entities.UserEntity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "commandes", indexes = {@Index(name = "idx_commande_date", columnList = "date"),
+        @Index(name = "idx_commande_status", columnList = "status")})
 public class CommandeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String client; // Nom du client qui passe la commande
+    // Suppression du champ client qui est remplacé par la table
 
-    private LocalDate date;
+    @Column(nullable = false)
+    private LocalDateTime date;
 
     private double montantTotal;
+
     @Column(name = "nombre_produits")
     private Integer nombreProduits = 0;
 
-
     @Enumerated(EnumType.STRING)
-    private StatutCommande status=StatutCommande.NONREGLE;
+    @Column(nullable = false)
+    private StatutCommande status = StatutCommande.EN_ATTENTE;  // Statut modifié selon vos exigences
+
+    @Column(name = "est_paye")
+    private boolean estPaye = false;  // Nouveau champ pour suivre le paiement
+
+    @Column(name = "facture_url")
+    private String factureUrl;  // URL de la facture générée
+
+    @ManyToOne
+    @JoinColumn(name = "serveur_id", nullable = false)
+    private UserEntity serveur;  // Serveur qui a créé la commande
+
+    @ManyToOne
+    @JoinColumn(name = "cuisinier_id")
+    private UserEntity cuisinier;  // Cuisinier qui prend en charge la commande
 
     @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<CommandeProduit> commandeProduits;
+
+    @ManyToOne
+    @JoinColumn(name = "table_id", nullable = false)
+    private TableEntity table;
+
+    @Column(name = "temps_preparation")
+    private Integer tempsPreparation;  // Estimation du temps de préparation en minutes
+
+    @Column(name = "date_paiement")
+    private LocalDateTime datePaiement;  // Date à laquelle la commande a été payée
+
+    // Méthode utilitaire pour vérifier si une commande peut être modifiée
+    @Transient
+    public boolean peutEtreModifiee() {
+        return !estPaye && status != StatutCommande.SERVI;
+    }
 }

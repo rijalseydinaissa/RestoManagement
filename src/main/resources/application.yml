@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/gestiona_app
+    url: jdbc:postgresql://localhost:5432/restaurant
     password: postgres
     username: postgres
     driver-class-name: org.postgresql.Driver
