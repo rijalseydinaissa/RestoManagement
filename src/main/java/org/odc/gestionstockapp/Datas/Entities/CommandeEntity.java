@@ -16,8 +16,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "commandes", indexes = {@Index(name = "idx_commande_date", columnList = "date"),
-        @Index(name = "idx_commande_status", columnList = "status")})
 public class CommandeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +24,7 @@ public class CommandeEntity {
     // Suppression du champ client qui est remplacé par la table
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    private LocalDate date;
 
     private double montantTotal;
 
@@ -39,12 +37,10 @@ public class CommandeEntity {
 
     @Column(name = "est_paye")
     private boolean estPaye = false;  // Nouveau champ pour suivre le paiement
-
-    @Column(name = "facture_url")
-    private String factureUrl;  // URL de la facture générée
+// URL de la facture générée
 
     @ManyToOne
-    @JoinColumn(name = "serveur_id", nullable = false)
+    @JoinColumn(name = "serveur_id", nullable = true)
     private UserEntity serveur;  // Serveur qui a créé la commande
 
     @ManyToOne
@@ -57,13 +53,11 @@ public class CommandeEntity {
 
     @ManyToOne
     @JoinColumn(name = "table_id", nullable = false)
-    private TableEntity table;
-
-    @Column(name = "temps_preparation")
-    private Integer tempsPreparation;  // Estimation du temps de préparation en minutes
+    private TableEntity table;// Estimation du temps de préparation en minutes
 
     @Column(name = "date_paiement")
     private LocalDateTime datePaiement;  // Date à laquelle la commande a été payée
+
 
     // Méthode utilitaire pour vérifier si une commande peut être modifiée
     @Transient

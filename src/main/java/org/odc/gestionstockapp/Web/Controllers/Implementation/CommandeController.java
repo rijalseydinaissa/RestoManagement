@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/commandes")  // Préfixe API pour clarifier
+@RequestMapping("/commandes")  // Préfixe API pour clarifier
 @Tag(name = "Commandes", description = "API pour la gestion des commandes du restaurant")
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {
         RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,

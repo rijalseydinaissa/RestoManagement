@@ -2,6 +2,7 @@ package org.odc.gestionstockapp.Datas.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +18,5 @@ public class TableEntity {
 
     private int numero;      // Numéro de la table
     private int capacite;    // Nombre de places
+    private boolean occupee = false;
 }

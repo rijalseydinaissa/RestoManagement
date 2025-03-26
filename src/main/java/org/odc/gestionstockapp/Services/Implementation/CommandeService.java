@@ -61,7 +61,7 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
         }
 
         CommandeEntity commandeEntity = commandeMapper.toEntity(commandeDto);
-        commandeEntity.setDate(LocalDateTime.now());
+        commandeEntity.setDate(LocalDate.now());
         commandeEntity.setServeur(currentUser);
         commandeEntity.setStatus(StatutCommande.EN_ATTENTE);
 
@@ -187,7 +187,6 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
     @Override
     public List<CommandeEntity> findAll() {
         UserEntity currentUser = getCurrentUser();
-
         // Filtrer selon le rôle
         if (currentUser.getRole() == Role.ADMIN) {
             // L'admin voit tout
@@ -297,7 +296,7 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
 
         // Générer la facture PDF
         String factureUrl = factureService.genererEtSauvegarderFacture((long) commande.getId());
-        commande.setFactureUrl(factureUrl);
+        //commande.setFactureUrl(factureUrl);
 
         return commandeRepository.save(commande);
     }
@@ -377,7 +376,7 @@ public class CommandeService implements CrudService<CommandeEntity, CommandeDto,
     private UserEntity getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        return userRepository.findByUsername(username)
+        return userRepository.findByEmail(username)
                 .orElseThrow(() -> new IllegalStateException("Utilisateur non authentifié"));
     }
 }
