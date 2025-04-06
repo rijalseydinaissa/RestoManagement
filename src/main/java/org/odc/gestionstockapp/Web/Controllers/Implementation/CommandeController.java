@@ -122,6 +122,18 @@ public class CommandeController implements CrudController<CommandeEntity, Comman
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
     }
+    @PostMapping("/{id}/annuler")
+    @Operation(summary = "Annuler une commande", description = "Un serveur ne peut annuler que ses propres commandes en attente ou en préparation")
+    @PreAuthorize("hasAnyRole('SERVEUR', 'ADMIN')")
+    public ResponseEntity<CommandeEntity> annulerCommande(@PathVariable int id) {
+        try {
+            CommandeEntity commandeAnnulee = commandeService.annulerCommande(id);
+            return ResponseEntity.ok(commandeAnnulee);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(null);
+        }
+    }
 
     @GetMapping("/statistiques/jour")
     @Operation(summary = "Obtenir les statistiques du jour", description = "Accessible uniquement aux administrateurs")

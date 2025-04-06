@@ -10,4 +10,6 @@ public interface ProduitRepository extends JpaRepository<ProduitEntity,Integer> 
     List<ProduitEntity> findByNomContainingIgnoreCase(String nom);
     List<ProduitEntity>findByCategorie(Categorie categorie);
     List<ProduitEntity>findByNomContainingIgnoreCaseAndCategorie(String nom , Categorie categorie);
+
+    Object findByQuantiteLessThan(int i);
 }

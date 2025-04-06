@@ -44,7 +44,14 @@ public class SecurityConfigurationImpl {
                         "/swagger-resources/**",
                         "/error/**",
                         "/webjars/**",
-                        "/api-docs/**"
+                        "/api-docs/**",
+                        "/commandes/{id}/status",
+                        "/factures/generer/{commandeId}",
+                        "/api/factures/generer/{commandeId}",
+                        ("/telecharger-facture/{urlUnique}"),
+                        "/factures/telecharger-facture/{urlUnique}",
+                        "/generer/{commandeId}",
+                        "/telecharger/{urlUnique}"
                 )
                 .permitAll()
                 .anyRequest()

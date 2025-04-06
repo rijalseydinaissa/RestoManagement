@@ -1,6 +1,7 @@
 package org.odc.gestionstockapp.Datas.Repositories;
 
 import org.odc.gestionstockapp.Datas.Entities.CommandeEntity;
+import org.odc.gestionstockapp.Datas.Entities.UserEntity;
 import org.odc.gestionstockapp.Datas.Enums.StatutCommande;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,10 +11,15 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CommandeRepository extends JpaRepository<CommandeEntity, Integer> {
-
+    @Query("SELECT c FROM CommandeEntity c WHERE c.status = :status1 OR (c.cuisinier = :cuisinier AND c.status = :status2)")
+    List<CommandeEntity> findByStatusOrCuisinierAndStatus(
+            @Param("status1") StatutCommande status1,
+            @Param("cuisinier") UserEntity cuisinier,
+            @Param("status2") StatutCommande status2);
     // Recherche par date
     @Query("SELECT c FROM CommandeEntity c WHERE DATE(c.date) = :date")
     List<CommandeEntity> findByDate(@Param("date") LocalDate date);

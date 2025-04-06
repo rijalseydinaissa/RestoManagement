@@ -40,5 +40,9 @@ public class ProduitEntity {
     @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore // Évite les cycles de sérialisation lorsque les produits sont affichés
     private List<CommandeProduit> commandeProduits;
+
+    public boolean isDisponible() {
+        return this.statut == StatutProduit.DISPONIBLE;
+    }
 }
 

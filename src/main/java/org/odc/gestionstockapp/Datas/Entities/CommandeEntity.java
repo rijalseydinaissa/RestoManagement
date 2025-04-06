@@ -47,7 +47,7 @@ public class CommandeEntity {
     @JoinColumn(name = "cuisinier_id")
     private UserEntity cuisinier;  // Cuisinier qui prend en charge la commande
 
-    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<CommandeProduit> commandeProduits;
 
